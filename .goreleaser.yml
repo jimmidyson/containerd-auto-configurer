@@ -1,0 +1,70 @@
+# Copyright 2022 D2iQ, Inc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+project_name: containerd-auto-configurer
+
+# NOTE(jimmidyson) the changelog is managed by `release-please`
+changelog:
+  skip: true
+
+release:
+  github:
+  prerelease: auto
+
+builds:
+  - id: containerd-auto-configurer
+    env:
+      - CGO_ENABLED=0
+    flags:
+      - -trimpath
+    ldflags:
+      - -s
+      - -w
+    goos:
+      - linux
+    goarch:
+      - amd64
+      - arm64
+    mod_timestamp: '{{ .CommitTimestamp }}'
+    hooks:
+      post: |
+        make IS_SNAPSHOT={{ .IsSnapshot }} GOOS={{ .Os }} GOARCH={{ .Arch }} UPX_TARGET={{ .Path }} upx
+dockers:
+  - image_templates:
+      - "jimmidyson/{{ .ProjectName }}:{{ .Version }}-amd64"
+    use: buildx
+    dockerfile: Dockerfile
+    build_flag_templates:
+      - "--label=org.opencontainers.image.created={{ .Date }}"
+      - "--label=org.opencontainers.image.title={{ .ProjectName }}"
+      - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
+      - "--label=org.opencontainers.image.version={{ .Version }}"
+      - "--platform=linux/amd64"
+  - image_templates:
+      - "jimmidyson/{{ .ProjectName }}:{{ .Version }}-arm64v8"
+    use: buildx
+    goarch: arm64
+    dockerfile: Dockerfile
+    build_flag_templates:
+      - "--label=org.opencontainers.image.created={{ .Date }}"
+      - "--label=org.opencontainers.image.title={{ .ProjectName }}"
+      - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
+      - "--label=org.opencontainers.image.version={{ .Version }}"
+      - "--platform=linux/arm64/v8"
+docker_manifests:
+  - name_template: jimmidyson/{{ .ProjectName }}:{ .Version }}
+    image_templates:
+    - jimmidyson/{{ .ProjectName }}:{{ .Version }}-amd64
+    - jimmidyson/{{ .ProjectName }}:{{ .Version }}-arm64v8
+archives:
+  - name_template: '{{ .ProjectName }}_v{{trimprefix .Version "v"}}_{{ .Os }}_{{ .Arch }}'
+  # This is a hack documented in https://github.com/goreleaser/goreleaser/blob/df0216d5855e9283d2106fb5acdb0e7b528a56e8/www/docs/customization/archive.md#packaging-only-the-binaries
+    files:
+      - none*
+    format_overrides:
+      - goos: windows
+        format: zip
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ incminor .Tag }}-dev"

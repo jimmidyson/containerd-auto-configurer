@@ -1,0 +1,33 @@
+{{- with .Mirrors -}}
+[plugins."io.containerd.grpc.v1.cri".registry.mirrors]
+  {{- range $registry, $mirror := . -}}
+    {{- with $mirror.Endpoints }}
+  [plugins."io.containerd.grpc.v1.cri".registry.mirrors."{{ $registry }}"]
+    endpoint = [ {{ range . }}{{ printf "%q, " . }}{{ end }}]
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- range $regName, $config := .Configs -}}
+  {{- with $config.TLS -}}
+    {{- if or .CAFile .ClientCertFile .ClientKeyFile .InsecureSkipVerify }}
+[plugins."io.containerd.grpc.v1.cri".registry.configs."{{ $regName }}".tls]
+{{- with .CAFile }}
+  ca_file = "{{ . }}"{{- end -}}
+{{- with .ClientCertFile }}
+  cert_file = "{{ . }}"{{- end }}
+{{- with .ClientKeyFile }}
+  key_file = "{{ . }}"{{- end }}
+{{- with .InsecureSkipVerify }}
+  insecure_skip_verify = {{ . }}{{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- range $regName, $config := .Configs -}}
+  {{- with $config.Authentication -}}
+    {{- if and .Username .Password }}
+[plugins."io.containerd.grpc.v1.cri".registry.configs."{{ $regName }}".auth]
+  username = "{{ .Username }}"
+  password = "{{ .Password }}"
+    {{- end -}}
+  {{- end -}}
+{{- end -}}

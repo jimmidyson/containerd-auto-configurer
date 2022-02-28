@@ -1,0 +1,5 @@
+[plugins."io.containerd.grpc.v1.cri".registry.mirrors]
+  [plugins."io.containerd.grpc.v1.cri".registry.mirrors."another.registry"]
+    endpoint = [ "https://2.4.6.8", "https://1.3.5.7", ]
+  [plugins."io.containerd.grpc.v1.cri".registry.mirrors."some.registry"]
+    endpoint = [ "https://1.2.3.4", "https://5.6.7.8", ]

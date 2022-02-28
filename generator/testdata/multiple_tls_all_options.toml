@@ -1,0 +1,10 @@
+
+[plugins."io.containerd.grpc.v1.cri".registry.configs."another.registry".tls]
+  ca_file = "/another/ca/file"
+  cert_file = "/another/client/cert"
+  key_file = "/another/client/key"
+[plugins."io.containerd.grpc.v1.cri".registry.configs."some.registry".tls]
+  ca_file = "/some/ca/file"
+  cert_file = "/some/client/cert"
+  key_file = "/some/client/key"
+  insecure_skip_verify = true

@@ -1,0 +1,25 @@
+# Copyright 2022 D2iQ, Inc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+mirrors:
+  docker.io:
+    endpoints:
+    - https://somewhere.tld
+    - http://somewhere-else.tld
+  quay.io:
+    endpoints:
+    - https://somewhere.tld
+    - http://somewhere-else.tld
+configs:
+  docker.io:
+    tls:
+      caFile: /a/b/c
+    authentication:
+      username: aaa
+      password: bbb
+  quay.io:
+    tls:
+      caFile: /a/b/c
+    authentication:
+      username: aaa
+      password: bbb

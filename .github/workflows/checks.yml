@@ -1,0 +1,50 @@
+# Copyright 2022 D2iQ, Inc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+name: checks
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  unit-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Install asdf and tools
+        uses: asdf-vm/actions/install@v1
+
+      - name: Run unit tests
+        run: make test
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Install asdf and tools
+        uses: asdf-vm/actions/install@v1
+
+      - name: Lint code
+        run: make lint
+
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Install asdf
+        uses: asdf-vm/actions/setup@v1
+
+      - uses: pre-commit/action@v2.0.3
+        with:
+          extra_args: --all-files
+        env:
+          SKIP: no-commit-to-branch,golangci-lint

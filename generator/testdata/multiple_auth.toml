@@ -1,0 +1,7 @@
+
+[plugins."io.containerd.grpc.v1.cri".registry.configs."another.registry".auth]
+  username = "c"
+  password = "d"
+[plugins."io.containerd.grpc.v1.cri".registry.configs."some.registry".auth]
+  username = "a"
+  password = "b"
