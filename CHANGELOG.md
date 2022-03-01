@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/jimmidyson/containerd-auto-configurer/compare/v0.1.0...v0.2.0) (2022-03-01)
+
+
+### Features
+
+* Watch config file for changes ([669d64b](https://github.com/jimmidyson/containerd-auto-configurer/commit/669d64b986cbee0a30a3efc9adbdafb760bc5ba2))
+
 ## [0.1.0](https://github.com/jimmidyson/containerd-auto-configurer/compare/v0.1.0...v0.1.0) (2022-02-28)
 
 
