@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"os/exec"
 
 	"gopkg.in/fsnotify.v1"
 	"sigs.k8s.io/yaml"
@@ -26,12 +27,17 @@ func main() {
 	watchConfigFile := flag.Bool(
 		"watch-config-file",
 		false,
-		"watch the specified config file for changes. If false, ",
+		"watch the specified config file for changes",
 	)
 	outputFile := flag.String(
 		"output-file",
 		"/etc/containerd/config.d/registry-config.toml",
 		"output file to write containerd registry config to",
+	)
+	reloadContainerd := flag.Bool(
+		"restart-containerd",
+		false,
+		"run systemctl restart containerd.service on config file changes",
 	)
 	flag.Parse()
 
@@ -49,6 +55,13 @@ func main() {
 	err = triggerGenerate(*configFile, g)
 	if err != nil {
 		log.Fatal(err)
+	}
+	if *reloadContainerd {
+		err = restartContainerd()
+		if err != nil {
+			log.Fatal(err)
+		}
+		log.Println("restarted containerd")
 	}
 	if !*watchConfigFile {
 		return
@@ -70,6 +83,14 @@ func main() {
 				if err != nil {
 					watcher.Close()
 					log.Fatal(err)
+				}
+				if *reloadContainerd {
+					err = restartContainerd()
+					if err != nil {
+						watcher.Close()
+						log.Fatal(err)
+					}
+					log.Println("restarted containerd")
 				}
 			case err, ok := <-watcher.Errors:
 				if !ok {
@@ -102,4 +123,18 @@ func triggerGenerate(configFile string, g generator.Generator) error {
 	}
 
 	return g.Generate(cfg)
+}
+
+func restartContainerd() error {
+	systemctl, err := exec.LookPath("systemctl")
+	if err != nil {
+		return fmt.Errorf("failed to find systemctl binary: %w", err)
+	}
+
+	out, err := exec.Command(systemctl, "restart", "containerd.service").CombinedOutput()
+	if err != nil {
+		return fmt.Errorf("failed to restart containerd: %w\n\noutput:\n\n%s)", err, string(out))
+	}
+
+	return nil
 }
