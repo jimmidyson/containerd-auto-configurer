@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.3.0](https://github.com/jimmidyson/containerd-auto-configurer/compare/v0.2.0...v0.3.0) (2022-03-01)
+
+
+### Features
+
+* Restart containerd after config changes ([#6](https://github.com/jimmidyson/containerd-auto-configurer/issues/6)) ([7eb9815](https://github.com/jimmidyson/containerd-auto-configurer/commit/7eb9815fdb3c22523792cb67aaf463c86b48ccba))
+
+
+### Bug Fixes
+
+* Properly quote values in templates ([#8](https://github.com/jimmidyson/containerd-auto-configurer/issues/8)) ([0f057e7](https://github.com/jimmidyson/containerd-auto-configurer/commit/0f057e7f96b20b69bb212ec6afee93fe7811b169))
+
 ## [0.2.0](https://github.com/jimmidyson/containerd-auto-configurer/compare/v0.1.0...v0.2.0) (2022-03-01)
 
 
