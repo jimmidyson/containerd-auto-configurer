@@ -15,7 +15,6 @@ import (
 	"github.com/spf13/afero"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"k8s.io/utils/pointer"
 
 	"github.com/jimmidyson/containerd-auto-configurer/api"
 )
@@ -64,7 +63,7 @@ func Test_configFileGenerator_Generate(t *testing.T) {
 			Configs: map[string]api.RegistryConfig{
 				"some.registry": {
 					TLS: &api.TLS{
-						InsecureSkipVerify: pointer.Bool(true),
+						InsecureSkipVerify: true,
 					},
 				},
 			},
@@ -75,10 +74,10 @@ func Test_configFileGenerator_Generate(t *testing.T) {
 			Configs: map[string]api.RegistryConfig{
 				"some.registry": {
 					TLS: &api.TLS{
-						InsecureSkipVerify: pointer.Bool(true),
-						CAFile:             pointer.String("/some/ca/file"),
-						ClientCertFile:     pointer.String("/some/client/cert"),
-						ClientKeyFile:      pointer.String("/some/client/key"),
+						InsecureSkipVerify: true,
+						CAFile:             "/some/ca/file",
+						ClientCertFile:     "/some/client/cert",
+						ClientKeyFile:      "/some/client/key",
 					},
 				},
 			},
@@ -89,17 +88,17 @@ func Test_configFileGenerator_Generate(t *testing.T) {
 			Configs: map[string]api.RegistryConfig{
 				"some.registry": {
 					TLS: &api.TLS{
-						InsecureSkipVerify: pointer.Bool(true),
-						CAFile:             pointer.String("/some/ca/file"),
-						ClientCertFile:     pointer.String("/some/client/cert"),
-						ClientKeyFile:      pointer.String("/some/client/key"),
+						InsecureSkipVerify: true,
+						CAFile:             "/some/ca/file",
+						ClientCertFile:     "/some/client/cert",
+						ClientKeyFile:      "/some/client/key",
 					},
 				},
 				"another.registry": {
 					TLS: &api.TLS{
-						CAFile:         pointer.String("/another/ca/file"),
-						ClientCertFile: pointer.String("/another/client/cert"),
-						ClientKeyFile:  pointer.String("/another/client/key"),
+						CAFile:         "/another/ca/file",
+						ClientCertFile: "/another/client/cert",
+						ClientKeyFile:  "/another/client/key",
 					},
 				},
 			},
@@ -174,17 +173,17 @@ func Test_configFileGenerator_Generate(t *testing.T) {
 			Configs: map[string]api.RegistryConfig{
 				"some.registry": {
 					TLS: &api.TLS{
-						InsecureSkipVerify: pointer.Bool(true),
-						CAFile:             pointer.String("/some/ca/file"),
-						ClientCertFile:     pointer.String("/some/client/cert"),
-						ClientKeyFile:      pointer.String("/some/client/key"),
+						InsecureSkipVerify: true,
+						CAFile:             "/some/ca/file",
+						ClientCertFile:     "/some/client/cert",
+						ClientKeyFile:      "/some/client/key",
 					},
 				},
 				"another.registry": {
 					TLS: &api.TLS{
-						CAFile:         pointer.String("/another/ca/file"),
-						ClientCertFile: pointer.String("/another/client/cert"),
-						ClientKeyFile:  pointer.String("/another/client/key"),
+						CAFile:         "/another/ca/file",
+						ClientCertFile: "/another/client/cert",
+						ClientKeyFile:  "/another/client/key",
 					},
 				},
 			},
@@ -203,10 +202,10 @@ func Test_configFileGenerator_Generate(t *testing.T) {
 			Configs: map[string]api.RegistryConfig{
 				"some.registry": {
 					TLS: &api.TLS{
-						InsecureSkipVerify: pointer.Bool(true),
-						CAFile:             pointer.String("/some/ca/file"),
-						ClientCertFile:     pointer.String("/some/client/cert"),
-						ClientKeyFile:      pointer.String("/some/client/key"),
+						InsecureSkipVerify: true,
+						CAFile:             "/some/ca/file",
+						ClientCertFile:     "/some/client/cert",
+						ClientKeyFile:      "/some/client/key",
 					},
 					Authentication: &api.Credentials{
 						Username: "a",
@@ -215,9 +214,9 @@ func Test_configFileGenerator_Generate(t *testing.T) {
 				},
 				"another.registry": {
 					TLS: &api.TLS{
-						CAFile:         pointer.String("/another/ca/file"),
-						ClientCertFile: pointer.String("/another/client/cert"),
-						ClientKeyFile:  pointer.String("/another/client/key"),
+						CAFile:         "/another/ca/file",
+						ClientCertFile: "/another/client/cert",
+						ClientKeyFile:  "/another/client/key",
 					},
 					Authentication: &api.Credentials{
 						Username: "c",

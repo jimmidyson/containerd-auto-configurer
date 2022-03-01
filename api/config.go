@@ -20,10 +20,10 @@ type RegistryConfig struct {
 }
 
 type TLS struct {
-	InsecureSkipVerify *bool   `json:"insecureSkipVerify,omitempty"`
-	CAFile             *string `json:"caFile,omitempty"`
-	ClientCertFile     *string `json:"clientCertFile,omitempty"`
-	ClientKeyFile      *string `json:"clientKeyFile,omitempty"`
+	InsecureSkipVerify bool   `json:"insecureSkipVerify,omitempty"`
+	CAFile             string `json:"caFile,omitempty"`
+	ClientCertFile     string `json:"clientCertFile,omitempty"`
+	ClientKeyFile      string `json:"clientKeyFile,omitempty"`
 }
 
 type Credentials struct {

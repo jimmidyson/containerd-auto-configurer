@@ -2,7 +2,7 @@
 [plugins."io.containerd.grpc.v1.cri".registry.mirrors]
   {{- range $registry, $mirror := . -}}
     {{- with $mirror.Endpoints }}
-  [plugins."io.containerd.grpc.v1.cri".registry.mirrors."{{ $registry }}"]
+  [plugins."io.containerd.grpc.v1.cri".registry.mirrors.{{ printf "%q" $registry }}]
     endpoint = [ {{ range . }}{{ printf "%q, " . }}{{ end }}]
     {{- end -}}
   {{- end -}}
@@ -10,13 +10,13 @@
 {{- range $regName, $config := .Configs -}}
   {{- with $config.TLS -}}
     {{- if or .CAFile .ClientCertFile .ClientKeyFile .InsecureSkipVerify }}
-[plugins."io.containerd.grpc.v1.cri".registry.configs."{{ $regName }}".tls]
+[plugins."io.containerd.grpc.v1.cri".registry.configs.{{ printf "%q" $regName }}.tls]
 {{- with .CAFile }}
-  ca_file = "{{ . }}"{{- end -}}
+  ca_file = {{ printf "%q" . }}{{- end -}}
 {{- with .ClientCertFile }}
-  cert_file = "{{ . }}"{{- end }}
+  cert_file = {{ printf "%q" . }}{{- end }}
 {{- with .ClientKeyFile }}
-  key_file = "{{ . }}"{{- end }}
+  key_file = {{ printf "%q" . }}{{- end }}
 {{- with .InsecureSkipVerify }}
   insecure_skip_verify = {{ . }}{{- end -}}
     {{- end -}}
@@ -25,9 +25,9 @@
 {{- range $regName, $config := .Configs -}}
   {{- with $config.Authentication -}}
     {{- if and .Username .Password }}
-[plugins."io.containerd.grpc.v1.cri".registry.configs."{{ $regName }}".auth]
-  username = "{{ .Username }}"
-  password = "{{ .Password }}"
+[plugins."io.containerd.grpc.v1.cri".registry.configs.{{ printf "%q" $regName }}.auth]
+  username = {{ printf "%q" .Username }}
+  password = {{ printf "%q" .Password }}
     {{- end -}}
   {{- end -}}
 {{- end -}}
