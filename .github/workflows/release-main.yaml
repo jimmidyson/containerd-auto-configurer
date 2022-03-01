@@ -18,6 +18,7 @@ jobs:
           release-type: go
           package-name: containerd-auto-configurer
           pull-request-title-pattern: "build${scope}: release${component} ${version}"
+          changelog-type: github
 
       - if: ${{ steps.release-please.outputs.release_created }}
         uses: actions/checkout@v2
