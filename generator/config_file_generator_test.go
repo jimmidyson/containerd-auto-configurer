@@ -37,6 +37,13 @@ func Test_configFileGenerator_Generate(t *testing.T) {
 			},
 		},
 	}, {
+		name: "single wildcard mirror",
+		config: api.Registries{
+			Mirrors: map[string]api.Mirror{
+				"*": {Endpoints: []api.Endpoint{"https://1.2.3.4"}},
+			},
+		},
+	}, {
 		name: "multiple mirror endpoints",
 		config: api.Registries{
 			Mirrors: map[string]api.Mirror{

@@ -26,6 +26,13 @@ func NewConfigFileGenerator(destFile string) Generator {
 }
 
 func (g *configFileGenerator) Generate(config api.Registries) error {
+	// If only wildcard mirrors are provided, then use this for docker.io as well. If
+	// more than one mirror configuration is provided, then docker.io must be explicitly
+	// provided separately.
+	if wildcardMirrors, found := config.Mirrors["*"]; found && len(config.Mirrors) == 1 {
+		config.Mirrors["docker.io"] = wildcardMirrors
+	}
+
 	fsys := g.fsys
 	if fsys == nil {
 		fsys = afero.NewOsFs()
