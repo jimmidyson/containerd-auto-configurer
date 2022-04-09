@@ -1,6 +1,6 @@
-golangci-lint 1.44.2
-goreleaser 1.5.0
-golang 1.17.7
-helm 3.8.0
+golangci-lint 1.45.2
+goreleaser 1.7.0
+golang 1.17.8 # FREEZE
+helm 3.8.1
 pre-commit 2.17.0
 upx 3.96
