@@ -2,6 +2,16 @@ apiVersion: v1
 entries:
   containerd-auto-configurer:
   - apiVersion: v2
+    appVersion: v0.4.4
+    created: "2022-04-11T19:09:29.228008289Z"
+    description: Configure containerd via Kubernetes secrets
+    digest: 52e8192c71fe2ffa5852ae05dd41ee1f5cf7533f6cf5a9b5227755d9f67d28da
+    name: containerd-auto-configurer
+    type: application
+    urls:
+    - https://jimmidyson.github.io/containerd-auto-configurer/repo/containerd-auto-configurer-v0.4.4.tgz
+    version: v0.4.4
+  - apiVersion: v2
     appVersion: v0.4.3
     created: "2022-04-11T14:26:06.105105071Z"
     description: Configure containerd via Kubernetes secrets
@@ -11,4 +21,4 @@ entries:
     urls:
     - https://jimmidyson.github.io/containerd-auto-configurer/repo/containerd-auto-configurer-v0.4.3.tgz
     version: v0.4.3
-generated: "2022-04-11T14:26:06.104603571Z"
+generated: "2022-04-11T19:09:29.226476077Z"
