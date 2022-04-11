@@ -13,6 +13,7 @@ release:
 
 builds:
   - id: containerd-auto-configurer
+    main: ./cmd/containerd-auto-configurer
     env:
       - CGO_ENABLED=0
     flags:
@@ -35,13 +36,13 @@ dockers:
     use: buildx
     dockerfile: Dockerfile
     build_flag_templates:
-      - --label=org.opencontainers.image.created={{ .Date }}"
-      - --label=org.opencontainers.image.title={{ .ProjectName }}"
-      - --label=org.opencontainers.image.revision={{ .FullCommit }}"
+      - --label=org.opencontainers.image.created={{ .Date }}
+      - --label=org.opencontainers.image.title={{ .ProjectName }}
+      - --label=org.opencontainers.image.revision={{ .FullCommit }}
       - --label=org.opencontainers.image.version=v{{trimprefix .Version "v"}}
       - --platform=linux/amd64
   - image_templates:
-      - jimmidyson/{{ .ProjectName }}:v{{trimprefix .Version "v"}}-arm64v8
+      - jimmidyson/{{ .ProjectName }}:v{{trimprefix .Version "v"}}-arm64
     use: buildx
     goarch: arm64
     dockerfile: Dockerfile
@@ -51,11 +52,40 @@ dockers:
       - --label=org.opencontainers.image.revision={{ .FullCommit }}
       - --label=org.opencontainers.image.version=v{{trimprefix .Version "v"}}
       - --platform=linux/arm64/v8
+  - image_templates:
+    - jimmidyson/setup-containerd-restart-systemd-units:v{{trimprefix .Version "v"}}-amd64
+    use: buildx
+    dockerfile: Dockerfile.setup-systemd
+    build_flag_templates:
+      - --label=org.opencontainers.image.created={{ .Date }}
+      - --label=org.opencontainers.image.title=setup-containerd-restart-systemd-units
+      - --label=org.opencontainers.image.revision={{ .FullCommit }}
+      - --label=org.opencontainers.image.version=v{{trimprefix .Version "v"}}
+      - --platform=linux/amd64
+    extra_files:
+      - hack/setup-containerd-restart.sh
+  - image_templates:
+      - jimmidyson/setup-containerd-restart-systemd-units:v{{trimprefix .Version "v"}}-arm64
+    use: buildx
+    goarch: arm64
+    dockerfile: Dockerfile.setup-systemd
+    build_flag_templates:
+      - --label=org.opencontainers.image.created={{ .Date }}
+      - --label=org.opencontainers.image.title=setup-containerd-restart-systemd-units
+      - --label=org.opencontainers.image.revision={{ .FullCommit }}
+      - --label=org.opencontainers.image.version=v{{trimprefix .Version "v"}}
+      - --platform=linux/arm64/v8
+    extra_files:
+      - hack/setup-containerd-restart.sh
 docker_manifests:
   - name_template: jimmidyson/{{ .ProjectName }}:v{{trimprefix .Version "v"}}
     image_templates:
-    - jimmidyson/{{ .ProjectName }}:v{{trimprefix .Version "v"}}-amd64
-    - jimmidyson/{{ .ProjectName }}:v{{trimprefix .Version "v"}}-arm64v8
+    - jimmidyson/setup-containerd-restart-systemd-units:v{{trimprefix .Version "v"}}-amd64
+    - jimmidyson/setup-containerd-restart-systemd-units:v{{trimprefix .Version "v"}}-arm64
+  - name_template: jimmidyson/setup-containerd-restart-systemd-units:v{{trimprefix .Version "v"}}
+    image_templates:
+    - jimmidyson/setup-containerd-restart-systemd-units:v{{trimprefix .Version "v"}}-amd64
+    - jimmidyson/setup-containerd-restart-systemd-units:v{{trimprefix .Version "v"}}-arm64
 archives:
   - name_template: '{{ .ProjectName }}_v{{trimprefix .Version "v"}}_{{ .Os }}_{{ .Arch }}'
   # This is a hack documented in https://github.com/goreleaser/goreleaser/blob/df0216d5855e9283d2106fb5acdb0e7b528a56e8/www/docs/customization/archive.md#packaging-only-the-binaries

@@ -10,6 +10,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"time"
 
 	"gopkg.in/fsnotify.v1"
@@ -32,7 +33,7 @@ func main() {
 	)
 	outputFile := flag.String(
 		"output-file",
-		"/etc/containerd/config.d/registry-config.toml",
+		"/etc/containerd/conf.d/registry-config.toml",
 		"output file to write containerd registry config to",
 	)
 	restartContainerd := flag.Bool(
@@ -42,7 +43,7 @@ func main() {
 	)
 	controlFile := flag.String(
 		"control-file",
-		"/var/run/containerd/restart",
+		"/var/run/containerd/restart/control",
 		"control file to touch after writing configuration in order to restart containerd",
 	)
 	flag.Parse()
@@ -91,9 +92,11 @@ func main() {
 				if !ok {
 					return
 				}
-				log.Println("event:", event)
-				if event.Op&fsnotify.Write == fsnotify.Write {
-					log.Println("modified file:", event.Name)
+				if event.Op&fsnotify.Create != fsnotify.Create {
+					continue
+				}
+				if filepath.Base(event.Name) != "..data" {
+					continue
 				}
 				err = triggerGenerate(*configFile, g)
 				if err != nil {
@@ -122,7 +125,7 @@ func main() {
 		}
 	}()
 
-	err = watcher.Add(*configFile)
+	err = watcher.Add(filepath.Dir(*configFile))
 	if err != nil {
 		watcher.Close()
 		log.Fatal(err)

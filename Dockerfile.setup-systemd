@@ -1,0 +1,4 @@
+FROM centos:7
+
+ENTRYPOINT ["/bin/bash", "/usr/local/bin/setup-containerd-restart.sh"]
+COPY hack/setup-containerd-restart.sh /usr/local/bin
