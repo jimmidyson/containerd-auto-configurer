@@ -40,8 +40,8 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
 
-      - name: Install asdf
-        uses: asdf-vm/actions/setup@v1
+      - name: Install asdf and tools
+        uses: asdf-vm/actions/install@v1
 
       - uses: pre-commit/action@v2.0.3
         with:
