@@ -4,7 +4,6 @@ IFS=$'\n\t'
 
 declare -r HOST_ROOT_FS="${HOST_ROOT_FS:-/}"
 chroot "${HOST_ROOT_FS}" /bin/sh -x <<'EOCHROOT'
-
 if grep -E '^imports = ' /etc/containerd/config.toml; then
   sed -i 's|^imports = .*$|imports = ["/etc/containerd/conf.d/*.toml"]|' /etc/containerd/config.toml
 else
