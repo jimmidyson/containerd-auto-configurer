@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.4.3](https://github.com/jimmidyson/containerd-auto-configurer/compare/v0.4.2...v0.4.3) (2022-04-11)
+
+
+### Build System
+
+* release v0.4.3 ([42c282c](https://github.com/jimmidyson/containerd-auto-configurer/commit/42c282c88e0140cc13e15f6b0b7ca96794f8698a))
+
 ### [0.4.2](https://github.com/jimmidyson/containerd-auto-configurer/compare/v0.4.1...v0.4.2) (2022-04-11)
 
 
