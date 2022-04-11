@@ -80,8 +80,8 @@ dockers:
 docker_manifests:
   - name_template: jimmidyson/{{ .ProjectName }}:v{{trimprefix .Version "v"}}
     image_templates:
-    - jimmidyson/setup-containerd-restart-systemd-units:v{{trimprefix .Version "v"}}-amd64
-    - jimmidyson/setup-containerd-restart-systemd-units:v{{trimprefix .Version "v"}}-arm64
+    - jimmidyson/{{ .ProjectName }}:v{{trimprefix .Version "v"}}-amd64
+    - jimmidyson/{{ .ProjectName }}:v{{trimprefix .Version "v"}}-arm64
   - name_template: jimmidyson/setup-containerd-restart-systemd-units:v{{trimprefix .Version "v"}}
     image_templates:
     - jimmidyson/setup-containerd-restart-systemd-units:v{{trimprefix .Version "v"}}-amd64
