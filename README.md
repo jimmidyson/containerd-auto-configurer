@@ -124,7 +124,7 @@ $ helm repo add containerd-auto-configurer helm https://jimmidyson.github.io/con
 $ helm repo update
 Hang tight while we grab the latest from your chart repositories...
 ...Successfully got an update from the "containerd-auto-configurer" chart repository
-$ helm upgrade --install containerd-auto-configurer/containerd-auto-configurer \
+$ helm upgrade --install containerd-auto-configurer containerd-auto-configurer/containerd-auto-configurer \
   --set configurationSecret.name=containerd-config
 ```
 
