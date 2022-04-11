@@ -123,6 +123,24 @@ func Test_configFileGenerator_Generate(t *testing.T) {
 			},
 		},
 	}, {
+		name: "auth for docker.io and registry-1.docker.io",
+		config: api.Registries{
+			Configs: map[string]api.RegistryConfig{
+				"docker.io": {
+					Authentication: &api.Credentials{
+						Username: "a",
+						Password: "b",
+					},
+				},
+				"registry-1.docker.io": {
+					Authentication: &api.Credentials{
+						Username: "c",
+						Password: "d",
+					},
+				},
+			},
+		},
+	}, {
 		name: "multiple auth",
 		config: api.Registries{
 			Configs: map[string]api.RegistryConfig{

@@ -33,6 +33,19 @@ func (g *configFileGenerator) Generate(config api.Registries) error {
 		config.Mirrors["docker.io"] = wildcardMirrors
 	}
 
+	// If credentials are provided for docker.io, but not for registry-1.docker.io, then duplicate
+	// the credentials. The containerd config must reference registry-1.docker.io here as it matches
+	// the hostname for sending credentials rather than the registry name.
+	if dockerHubConfig, found := config.Configs["docker.io"]; found {
+		dockerHubRegistryConfig, found := config.Configs["registry-1.docker.io"]
+		if !found {
+			dockerHubRegistryConfig = dockerHubConfig
+		} else if dockerHubRegistryConfig.Authentication == nil {
+			dockerHubRegistryConfig.Authentication = dockerHubConfig.Authentication
+		}
+		config.Configs["registry-1.docker.io"] = dockerHubRegistryConfig
+	}
+
 	fsys := g.fsys
 	if fsys == nil {
 		fsys = afero.NewOsFs()

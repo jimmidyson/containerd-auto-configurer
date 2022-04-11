@@ -1,0 +1,7 @@
+
+[plugins."io.containerd.grpc.v1.cri".registry.configs."docker.io".auth]
+  username = "a"
+  password = "b"
+[plugins."io.containerd.grpc.v1.cri".registry.configs."registry-1.docker.io".auth]
+  username = "a"
+  password = "b"
