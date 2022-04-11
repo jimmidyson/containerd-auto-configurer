@@ -108,6 +108,7 @@ configs:
 
 First create a secret containing your configuration, e.g.:
 
+```bash
 $ cat <<'EOF' | kubectl create secret generic containerd-config --from-file=config.yaml=/dev/stdin
 configs:
   docker.io:
@@ -115,6 +116,7 @@ configs:
       username: aaa
       password: bbb
 EOF
+```
 
 The project then can be deployed via Helm.
 
