@@ -21,7 +21,7 @@ jobs:
           changelog-type: github
 
       - if: ${{ steps.release-please.outputs.release_created }}
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
@@ -41,3 +41,12 @@ jobs:
         run: make release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - if: ${{ steps.release-please.outputs.release_created }}
+        name: Publish Helm chart
+        uses: stefanprodan/helm-gh-pages@v1.5.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          app_version: ${{ steps.release-please.outputs.tag_name }}
+          chart_version: ${{ steps.release-please.outputs.tag_name }}
+          target_dir: repo
