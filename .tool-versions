@@ -6,4 +6,5 @@ helm 3.8.1
 kind 0.12.0
 kubectl 1.23.5
 pre-commit 2.17.0
+shfmt 3.4.3
 upx 3.96
