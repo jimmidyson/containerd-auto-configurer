@@ -55,7 +55,7 @@ spec:
             capabilities:
               add:
                 - SYS_ADMIN
-            privileged: true
+            privileged: false
             runAsUser: 0
             runAsNonRoot: false
           env:
