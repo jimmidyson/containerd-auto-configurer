@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.4.0](https://github.com/jimmidyson/containerd-auto-configurer/compare/v0.3.0...v0.4.0) (2022-04-11)
+
+
+### Features
+
+* Add helm chart ([17ca0ac](https://github.com/jimmidyson/containerd-auto-configurer/commit/17ca0ace3bbb3f73ed3018ba5db7f0b76a041762))
+* Add setup systemd docker container to build ([e71ce4a](https://github.com/jimmidyson/containerd-auto-configurer/commit/e71ce4a21f88a6ec095914fb35b3f74a038d1b0c))
+* Support control file to touch after generating config ([9f07af4](https://github.com/jimmidyson/containerd-auto-configurer/commit/9f07af44d104ea522c866d28686c120764521b5a))
+* Support wildcard mirrors ([00c4ced](https://github.com/jimmidyson/containerd-auto-configurer/commit/00c4ceddcef7bac56777a3ad65afa9f72c3e05f1))
+
 ## [0.3.0](https://github.com/jimmidyson/containerd-auto-configurer/compare/v0.2.0...v0.3.0) (2022-03-01)
 
 
