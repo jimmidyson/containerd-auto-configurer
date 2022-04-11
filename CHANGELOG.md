@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.4.4](https://github.com/jimmidyson/containerd-auto-configurer/compare/v0.4.3...v0.4.4) (2022-04-11)
+
+
+### Bug Fixes
+
+* Remove need for privileged container ([1132174](https://github.com/jimmidyson/containerd-auto-configurer/commit/11321741fea60a5c0f609cf42fbd2c044a5a40ea))
+
 ### [0.4.3](https://github.com/jimmidyson/containerd-auto-configurer/compare/v0.4.2...v0.4.3) (2022-04-11)
 
 
