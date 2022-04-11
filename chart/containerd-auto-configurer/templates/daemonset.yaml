@@ -1,0 +1,86 @@
+# Copyright 2022 D2iQ, Inc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: {{ include "containerd-auto-configurer.fullname" . }}
+  labels:
+    {{- include "containerd-auto-configurer.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "containerd-auto-configurer.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "containerd-auto-configurer.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      hostPID: true
+      hostIPC: true
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.images.autoConfigurer.repository }}:{{ .Values.images.autoConfigurer.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.images.autoConfigurer.pullPolicy }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          args:
+            - --config-file=/etc/containerd-auto-configurer/{{ .Values.configurationSecret.key }}
+            - --watch-config-file
+          volumeMounts:
+          - name: config-file
+            mountPath: "/etc/containerd-auto-configurer"
+            readOnly: true
+          - name: containerd-config
+            mountPath: /etc/containerd
+          - name: containerd-restart
+            mountPath: /var/run/containerd/restart
+      initContainers:
+        - name: setup-systemd
+          image: "{{ .Values.images.setupSystemd.repository }}:{{ .Values.images.setupSystemd.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.images.setupSystemd.pullPolicy }}
+          securityContext:
+            capabilities:
+              add:
+                - SYS_ADMIN
+            privileged: true
+            runAsUser: 0
+            runAsNonRoot: false
+          env:
+            - name: HOST_ROOT_FS
+              value: /hostfs
+          volumeMounts:
+          - name: host-root
+            mountPath: "/hostfs"
+      volumes:
+      - name: config-file
+        secret:
+          secretName: "{{ required "A valid configuration secret name is required" .Values.configurationSecret.name }}"
+      - name: containerd-config
+        hostPath:
+          path: /etc/containerd
+          type: Directory
+      - name: containerd-restart
+        hostPath:
+          path: /var/run/containerd/restart
+          type: DirectoryOrCreate
+      - name: host-root
+        hostPath:
+          path: /
+          type: Directory
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
