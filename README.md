@@ -109,7 +109,7 @@ configs:
 First create a secret containing your configuration, e.g.:
 
 ```bash
-$ cat <<'EOF' | kubectl create secret generic containerd-config --from-file=config.yaml=/dev/stdin
+$ cat <<'EOF' | kubectl create secret generic -n kube-system containerd-config --from-file=config.yaml=/dev/stdin
 configs:
   docker.io:
     authentication:
