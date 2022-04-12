@@ -19,13 +19,15 @@ kind.run: ; $(info $(M) deploying on KinD cluster $(KIND_CLUSTER_NAME))
 	parallel -j 4 -- docker container exec {} \
 		ctr -n k8s.io images tag --force docker.io/jimmidyson/setup-containerd-restart-systemd-units:$${IMAGE_VERSION}{-$${IMAGE_ARCH},} \
 		<<<$$(kubectl get no -o jsonpath="{.items[*].metadata.name}") && \
-	helm upgrade --install {,chart/}containerd-auto-configurer \
+	helm upgrade --install --wait --wait-for-jobs \
+		{,chart/}containerd-auto-configurer \
+		--namespace kube-system \
 		--set images.autoConfigurer.tag="$${IMAGE_VERSION}" \
 		--set images.setupSystemd.tag="$${IMAGE_VERSION}" \
 		--set images.setupSystemd.imagePullPolicy=never \
 		--set images.setupSystemd.imagePullPolicy=never \
 		--set configurationSecret.name=containerd-config
-	kubectl rollout restart daemonset/containerd-auto-configurer
+	kubectl --namespace kube-system rollout restart daemonset/containerd-auto-configurer
 
 .PHONY: kind.create
 kind.create: ## Creates a KinD cluster for development

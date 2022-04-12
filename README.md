@@ -118,7 +118,8 @@ configs:
 EOF
 ```
 
-The project then can be deployed via Helm.
+The project then can be deployed via Helm. For security, it is highly recommended to deploy the app in a dedicated
+namespace that only `cluster-admins` can access, or alternatively use `kube-system`.
 
 ```bash
 $ helm repo add containerd-auto-configurer helm https://jimmidyson.github.io/containerd-auto-configurer/repo
@@ -126,7 +127,9 @@ $ helm repo add containerd-auto-configurer helm https://jimmidyson.github.io/con
 $ helm repo update
 Hang tight while we grab the latest from your chart repositories...
 ...Successfully got an update from the "containerd-auto-configurer" chart repository
-$ helm upgrade --install containerd-auto-configurer containerd-auto-configurer/containerd-auto-configurer \
+$ helm upgrade --install --wait --wait-for-jobs \
+  --namespace kube-system \
+  containerd-auto-configurer containerd-auto-configurer/containerd-auto-configurer \
   --set configurationSecret.name=containerd-config
 ```
 
