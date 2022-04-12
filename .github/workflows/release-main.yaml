@@ -50,4 +50,3 @@ jobs:
           app_version: ${{ steps.release-please.outputs.tag_name }}
           chart_version: ${{ steps.release-please.outputs.tag_name }}
           target_dir: repo
-          charts_dir: chart
