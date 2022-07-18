@@ -6,7 +6,7 @@ module github.com/jimmidyson/containerd-auto-configurer
 go 1.17
 
 require (
-	github.com/spf13/afero v1.8.2
+	github.com/spf13/afero v1.9.0
 	github.com/stretchr/testify v1.7.1
 	gopkg.in/fsnotify.v1 v1.4.7
 	sigs.k8s.io/yaml v1.3.0
