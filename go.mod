@@ -7,7 +7,7 @@ go 1.17
 
 require (
 	github.com/spf13/afero v1.8.2
-	github.com/stretchr/testify v1.7.1
+	github.com/stretchr/testify v1.8.1
 	gopkg.in/fsnotify.v1 v1.4.7
 	sigs.k8s.io/yaml v1.3.0
 )
@@ -19,5 +19,5 @@ require (
 	golang.org/x/sys v0.0.0-20210630005230-0f9fa26af87c // indirect
 	golang.org/x/text v0.3.7 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
-	gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
