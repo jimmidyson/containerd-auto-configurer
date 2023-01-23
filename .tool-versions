@@ -1,10 +1,10 @@
-gojq 0.12.7
-golangci-lint 1.45.2
-goreleaser 1.7.0
+gojq 0.12.11
+golangci-lint 1.50.1
+goreleaser 1.14.1
 golang 1.17.8 # FREEZE
-helm 3.8.1
-kind 0.12.0
-kubectl 1.23.5
-pre-commit 2.17.0
-shfmt 3.4.3
-upx 3.96
+helm 3.11.0
+kind 0.17.0
+kubectl 1.26.1
+pre-commit 2.21.0
+shfmt 3.6.0
+upx 4.0.1

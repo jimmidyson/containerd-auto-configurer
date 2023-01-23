@@ -6,7 +6,7 @@
 export GOPRIVATE ?= github.com/mesosphere
 
 ALL_GO_SUBMODULES := $(shell find -mindepth 2 -maxdepth 2 -name go.mod -printf '%P\n' | sort)
-GO_SUBMODULES_NO_TOOLS := $(filter-out $(addsuffix /go.mod,skopeo-static tools),$(ALL_GO_SUBMODULES))
+GO_SUBMODULES_NO_TOOLS := $(filter-out $(addsuffix /go.mod,tools),$(ALL_GO_SUBMODULES))
 
 ifndef GOOS
 export GOOS := $(OS)
@@ -17,6 +17,7 @@ endif
 
 define go_test
 	gotestsum \
+		--jsonfile test.json \
 		--junitfile junit-report.xml \
 		--junitfile-testsuite-name=relative \
 		--junitfile-testcase-classname=short \
