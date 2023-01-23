@@ -1,7 +1,7 @@
 gojq 0.12.11
 golangci-lint 1.50.1
 goreleaser 1.14.1
-golang 1.17.8 # FREEZE
+golang 1.19.5
 helm 3.11.0
 kind 0.17.0
 kubectl 1.26.1
