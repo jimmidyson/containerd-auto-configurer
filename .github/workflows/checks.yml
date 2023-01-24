@@ -40,7 +40,7 @@ jobs:
           test-results: test.json
 
   lint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Check out code
         uses: actions/checkout@v3
@@ -57,7 +57,7 @@ jobs:
           golangci_lint_version: v${{ fromJson(steps.versions.outputs.tools).golangci-lint }}
 
   pre-commit:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Check out code
         uses: actions/checkout@v3
@@ -75,6 +75,11 @@ jobs:
       - uses: mfinelli/setup-shfmt@v2
         with:
           shfmt-version: ${{ fromJson(steps.versions.outputs.tools).shfmt }}
+
+      - name: Install asdf and tools
+        uses: asdf-vm/actions/setup@v1.1.0
+        with:
+          asdf_branch: v0.11.0
 
       - uses: pre-commit/action@v3.0.0
         with:
